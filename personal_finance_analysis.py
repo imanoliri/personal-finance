@@ -47,13 +47,3 @@ report_per_month_of_the_year = per_month_of_the_year_financial_report_from_banki
 )
 report_per_month_of_the_year
 # %%
-# Clean data should look like this:
-# -- Index: Year, Month, Day
-# -- Columns: Status (0,1), Sender, Receiver, Note, Type (in, out), IBAN, Amount (€)
-# -- Delete columns: Creditor ID, Mandate Reference, Customer Reference
-# %%
-# Final personal finance report by year should look like this
-# -- Index: Year
-# -- Columns directly from data: (Cash start,) Cash end, Earned, Saved, Spent, Invested in X, Invested in Y, ...
-# -- Derived Columns: Investment Ratio, Investment in X, Investment in Y...
-# %%

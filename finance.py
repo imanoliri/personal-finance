@@ -180,8 +180,3 @@ def select_from_column(
 
 def prefix_dict_keys(di: dict, prefix: str) -> dict:
     return {f"{prefix}_{key}": value for key, value in di.items()}
-
-
-# -- Index: Year
-# -- Columns directly from data: (Cash start,) Cash end, Earned, Saved, Spent, Invested in X, Invested in Y, ...
-# -- Derived Columns: Investment Ratio, Investment in X, Investment in Y...
