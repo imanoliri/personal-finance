@@ -1,5 +1,5 @@
 employers = ["DLR"]
-investments = None  # ['S&P500', 'MsciWorld]
+investments = ["SP500", "MsCi_World"]
 sender_aliases = {
     "Imanol": [
         ("include", "imanol"),
@@ -51,6 +51,14 @@ reason_aliases = {
     "Paycheck": [
         ("include", "Lohn"),
         ("include", "Gehalt"),
+    ],
+    "SP500": [
+        ("include", "WKN A0YEDG"),
+        ("include", "ISIN IE00B5BMR087"),
+    ],
+    "MsCi_World": [
+        ("include", "WKN LYX0YD"),
+        ("include", "ISIN LU1781541179"),
     ],
     "Depot": [
         ("include", "Depot"),

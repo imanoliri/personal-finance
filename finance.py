@@ -4,6 +4,8 @@ from banking_data import (
     YEAR_DATE_COLUMN,
     MONTH_DATE_COLUMN,
     SENDER_COLUMN,
+    RECEIVER_COLUMN,
+    REASON_COLUMN,
     AMOUNT_COLUMN,
 )
 
@@ -92,8 +94,8 @@ def extract_finance_data(
         [np.NaN], index=pd.MultiIndex.from_tuples([("Income", "Employers", "Total")])
     )
     if employers:
-        employer_stats = get_stats_from_sender_group(
-            df_positives, employers, [["Income"], ["Employers"]]
+        employer_stats = get_stats_from_column_group(
+            df_positives, SENDER_COLUMN, employers, [["Income"], ["Employers"]]
         )
 
     # Investment data
@@ -102,18 +104,28 @@ def extract_finance_data(
         index=pd.MultiIndex.from_tuples([("Income", "Investments", "Total")]),
     )
     if investments:
-        investment_stats = get_stats_from_sender_group(
-            df_positives, investments, [["Income"], ["Investments"]]
+        investment_stats = get_stats_from_column_group(
+            df_negatives, REASON_COLUMN, investments, [["Income"], ["Investments"]]
         )
 
+    invested_amount = -df_negatives.loc[
+        (r in investments for r in df_negatives.Reason), AMOUNT_COLUMN
+    ].sum()
+    spent_amount = -df_negatives.loc[:, AMOUNT_COLUMN].sum() - invested_amount
     summary = pd.Series(
         [
             df_positives.loc[:, AMOUNT_COLUMN].sum(),
             df.loc[:, AMOUNT_COLUMN].sum(),
-            df_negatives.loc[:, AMOUNT_COLUMN].sum(),
+            spent_amount,
+            invested_amount,
         ],
         index=pd.MultiIndex.from_tuples(
-            [("Income", "Total", ""), ("Saved", "Total", ""), ("Spent", "Total", "")]
+            [
+                ("General", "Income", "Total"),
+                ("General", "Saved", "Total"),
+                ("General", "Spent", "Total"),
+                ("General", "Invested", "Total"),
+            ]
         ),
     ).T
 
@@ -131,12 +143,17 @@ def basic_stats(df: pd.DataFrame, name: str) -> pd.Series:
     ).T
 
 
-def get_stats_from_sender_group(
-    df: pd.DataFrame, senders: List[str], over_levels: List[List[str]]
+def get_stats_from_column_group(
+    df: pd.DataFrame,
+    grouping_column: str,
+    column_values: List[str],
+    over_levels: List[List[str]],
 ) -> pd.Series:
-    df_selected = select_from_senders(df, senders)
+    df_selected = select_from_column(df, grouping_column, column_values)
     amount_by_sender = (
-        df_selected.loc[:, [SENDER_COLUMN, AMOUNT_COLUMN]].groupby(SENDER_COLUMN).sum()
+        df_selected.loc[:, [grouping_column, AMOUNT_COLUMN]]
+        .groupby(grouping_column)
+        .sum()
     )
     amount_by_sender = amount_by_sender.loc[:, AMOUNT_COLUMN]
     amount_by_sender.index = pd.MultiIndex.from_product(
@@ -155,10 +172,10 @@ def get_stats_from_sender_group(
     )
 
 
-def select_from_senders(
-    df: pd.DataFrame, selected_senders: List[str] = None
+def select_from_column(
+    df: pd.DataFrame, col: str, selected_senders: List[str] = None
 ) -> pd.DataFrame:
-    return df.loc[(sender in selected_senders for sender in df.Sender)]
+    return df.loc[(sender in selected_senders for sender in df.loc[:, col])]
 
 
 def prefix_dict_keys(di: dict, prefix: str) -> dict:

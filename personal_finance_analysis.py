@@ -29,21 +29,21 @@ df = clean_senders(df, sender_aliases)
 df = clean_receivers(df, receiver_aliases)
 df = clean_reasons(df, reason_aliases)
 report_yearly = yearly_financial_report_from_banking_data(
-    df, employers=employers, investments=None
+    df, employers=employers, investments=investments
 )
 report_yearly
 # %%
 from finance import monthly_financial_report_from_banking_data
 
 report_monthly = monthly_financial_report_from_banking_data(
-    df, employers=employers, investments=None
+    df, employers=employers, investments=investments
 )
 report_monthly
 # %%
 from finance import per_month_of_the_year_financial_report_from_banking_data
 
 report_per_month_of_the_year = per_month_of_the_year_financial_report_from_banking_data(
-    df, employers=employers, investments=None
+    df, employers=employers, investments=investments
 )
 report_per_month_of_the_year
 # %%
