@@ -1,4 +1,5 @@
 from datetime import datetime
+from banking_data import SENDER_COLUMN, RECEIVER_COLUMN, REASON_COLUMN, AMOUNT_COLUMN
 
 dkb_reading_kwargs = dict(sep=";", decimal=",", thousands=".")
 dkb_columns = [
@@ -38,12 +39,12 @@ dkb_2_standard_columns = {
     "Buchungsdatum": "Booking date",
     "Wertstellung": "Paying date",
     "Status": "Status",
-    "Zahlungspflichtige*r": "Sender",
-    "Zahlungsempfänger*in": "Receiver",
-    "Verwendungszweck": "Reason for payment",
+    "Zahlungspflichtige*r": SENDER_COLUMN,
+    "Zahlungsempfänger*in": RECEIVER_COLUMN,
+    "Verwendungszweck": REASON_COLUMN,
     "Umsatztyp": "Type",
     "IBAN": "IBAN",
-    "Betrag (€)": "Amount",
+    "Betrag (€)": AMOUNT_COLUMN,
     "Gläubiger-ID": "Creditor ID",
     "Mandatsreferenz": "Mandate reference",
     "Kundenreferenz": "Customer reference",

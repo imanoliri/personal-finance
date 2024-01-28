@@ -7,20 +7,22 @@ Aliases = Dict[str, List[str]]
 
 
 def clean_senders(df: pd.DataFrame, sender_aliases: Aliases) -> pd.DataFrame:
-    return clean_strings(df, SENDER_COLUMN, sender_aliases)
+    df.loc[:, SENDER_COLUMN] = clean_strings(df, SENDER_COLUMN, sender_aliases)
+    return df
 
 
 def clean_receivers(df: pd.DataFrame, receiver_aliases: Aliases) -> pd.DataFrame:
-    return clean_strings(df, RECEIVER_COLUMN, receiver_aliases)
+    df.loc[:, RECEIVER_COLUMN] = clean_strings(df, RECEIVER_COLUMN, receiver_aliases)
+    return df
 
 
 def clean_reasons(df: pd.DataFrame, reason_aliases: Aliases) -> pd.DataFrame:
-    return clean_strings(df, REASON_COLUMN, reason_aliases)
+    df.loc[:, REASON_COLUMN] = clean_strings(df, REASON_COLUMN, reason_aliases)
+    return df
 
 
 def clean_strings(df: pd.DataFrame, col: str, aliases: Aliases) -> pd.DataFrame:
-    df.loc[:, col] = df.loc[:, col].apply(replace_string, aliases=aliases)
-    return df
+    return df.loc[:, col].apply(replace_string, aliases=aliases)
 
 
 def replace_string(

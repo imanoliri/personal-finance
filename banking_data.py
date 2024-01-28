@@ -16,7 +16,7 @@ standard_time_columns_dtypes = dict(zip(date_columns, [int] * len(date_columns))
 
 SENDER_COLUMN = "Sender"
 RECEIVER_COLUMN = "Receiver"
-REASON_COLUMN = "Reason for payment"
+REASON_COLUMN = "Reason"
 AMOUNT_COLUMN = "Amount"
 standard_banking_dtypes = {
     **standard_time_columns_dtypes,
