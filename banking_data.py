@@ -15,14 +15,16 @@ date_columns = [
 standard_time_columns_dtypes = dict(zip(date_columns, [int] * len(date_columns)))
 
 SENDER_COLUMN = "Sender"
+RECEIVER_COLUMN = "Receiver"
+REASON_COLUMN = "Reason for payment"
 AMOUNT_COLUMN = "Amount"
 standard_banking_dtypes = {
     **standard_time_columns_dtypes,
     standard_date_column: datetime,
     "Status": str,  # Booked / Prebooked
     SENDER_COLUMN: str,
-    "Receiver": str,
-    "Reason for payment": str,
+    RECEIVER_COLUMN: str,
+    REASON_COLUMN: str,
     "Type": str,  # In / Out
     "IBAN": str,
     AMOUNT_COLUMN: float,

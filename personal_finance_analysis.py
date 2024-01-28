@@ -16,10 +16,18 @@ df.dtypes
 df.info()
 # %%
 from finance import yearly_financial_report_from_banking_data
-from imanol import employers, investments, sender_aliases
-from cleaning import clean_senders
+from imanol import (
+    employers,
+    investments,
+    sender_aliases,
+    receiver_aliases,
+    reason_aliases,
+)
+from cleaning import clean_senders, clean_receivers, clean_reasons
 
 df = clean_senders(df, sender_aliases)
+df = clean_receivers(df, receiver_aliases)
+df = clean_reasons(df, reason_aliases)
 report_yearly = yearly_financial_report_from_banking_data(
     df, employers=employers, investments=None
 )
