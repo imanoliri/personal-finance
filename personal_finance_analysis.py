@@ -3,10 +3,11 @@
 
 # %%
 # Read the input data
-from data import read_banking, dkb_banking_reading_kwargs
+from banking_data import read_standard_banking_data
+from dkb import dkb_banking_reading_kwargs
 
 banking_data_file = "data/DKB_data_imanol.csv"
-df = read_banking(banking_data_file, **dkb_banking_reading_kwargs)
+df = read_standard_banking_data(banking_data_file, **dkb_banking_reading_kwargs)
 
 # banking_data_file = "data/DKB_data_imanol.xlsx"
 # df = pd.read_excel(banking_data_file)
@@ -14,7 +15,29 @@ df.dtypes
 # %%
 df.info()
 # %%
-df
+from finance import yearly_financial_report_from_banking_data
+from imanol import employers, investments, sender_aliases
+from cleaning import clean_senders
+
+df = clean_senders(df, sender_aliases)
+report_yearly = yearly_financial_report_from_banking_data(
+    df, employers=employers, investments=None
+)
+report_yearly
+# %%
+from finance import monthly_financial_report_from_banking_data
+
+report_monthly = monthly_financial_report_from_banking_data(
+    df, employers=employers, investments=None
+)
+report_monthly
+# %%
+from finance import per_month_of_the_year_financial_report_from_banking_data
+
+report_per_month_of_the_year = per_month_of_the_year_financial_report_from_banking_data(
+    df, employers=employers, investments=None
+)
+report_per_month_of_the_year
 # %%
 # Clean data should look like this:
 # -- Index: Year, Month, Day
