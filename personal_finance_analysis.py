@@ -31,6 +31,8 @@ df = clean_reasons(df, reason_aliases)
 report_yearly = yearly_financial_report_from_banking_data(
     df, employers=employers, investments=investments
 )
+report_yearly_file = "data/report_yearly_imanol.pkl"
+report_yearly.to_pickle(report_yearly_file)
 report_yearly
 # %%
 from finance import monthly_financial_report_from_banking_data
@@ -38,12 +40,16 @@ from finance import monthly_financial_report_from_banking_data
 report_monthly = monthly_financial_report_from_banking_data(
     df, employers=employers, investments=investments
 )
+report_monthly_file = "data/report_monthly_imanol.pkl"
+report_monthly.to_pickle(report_monthly_file)
 report_monthly
 # %%
 from finance import per_month_of_the_year_financial_report_from_banking_data
 
-report_per_month_of_the_year = per_month_of_the_year_financial_report_from_banking_data(
+report_by_month_of_the_year = per_month_of_the_year_financial_report_from_banking_data(
     df, employers=employers, investments=investments
 )
-report_per_month_of_the_year
+report_by_month_of_the_year_file = "data/report_by_month_of_the_year_imanol.pkl"
+report_by_month_of_the_year.to_pickle(report_by_month_of_the_year_file)
+report_by_month_of_the_year
 # %%
